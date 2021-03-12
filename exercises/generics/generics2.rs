@@ -1,17 +1,27 @@
 // This powerful wrapper provides the ability to store a positive integer value.
 // Rewrite it using generics so that it supports wrapping ANY type.
 
-// I AM NOT DONE
 
-struct Wrapper {
-    value: u32,
+// struct Wrapper{
+//     value: u32,
+    // value: Y
+// }
+struct Wrapper<T> {
+    value: T, 
 }
 
-impl Wrapper {
-    pub fn new(value: u32) -> Self {
-        Wrapper { value }
+impl<T> Wrapper<T> {
+    pub fn new(val: T) -> Self {
+        // Wrapper{value: value};
+        // &self.value
+        Wrapper {
+            value: val
+        }
     }
 }
+// impl<T> GenWrapper<T> {
+//     pub fn new(&self)
+// }
 
 #[cfg(test)]
 mod tests {
