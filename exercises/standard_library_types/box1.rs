@@ -20,7 +20,7 @@
 
 #[derive(PartialEq, Debug)]
 pub enum List {
-    Cons(i32, List),
+    Cons(i32, Box<List>),
     Nil,
 }
 
@@ -31,13 +31,16 @@ fn main() {
         create_non_empty_list()
     );
 }
-
+use List::{Cons, Nil};
 pub fn create_empty_list() -> List {
-    unimplemented!()
+    // unimplemented!()
+    Nil
 }
 
 pub fn create_non_empty_list() -> List {
-    unimplemented!()
+    // unimplemented!()
+    let o = Cons(1, Box::new(Cons(1, Box::new(Nil))));
+    o
 }
 
 #[cfg(test)]
