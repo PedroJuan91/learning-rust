@@ -6,26 +6,34 @@
 // of "waiting..." and the program ends without timing out when running,
 // you've got it :)
 
-// I AM NOT DONE
 
-use std::sync::Arc;
+use std::sync::{Arc, Mutex};
 use std::thread;
 use std::time::Duration;
+// use std::ops::Deref;
 
 struct JobStatus {
     jobs_completed: u32,
 }
+// impl DerefMut for JobStatus{
+//     type Target = u32;
+
+//     fn deref_mut(&mut &self) -> &mut &Self::Target {
+//         &mut &self.jobs_completed
+//     }
+// }
+
 
 fn main() {
-    let status = Arc::new(JobStatus { jobs_completed: 0 });
-    let status_shared = status.clone();
+    let status = Arc::new(Mutex::new(JobStatus { jobs_completed: 0 }));
+    let status_shared = Arc::clone(&status);
     thread::spawn(move || {
         for _ in 0..10 {
             thread::sleep(Duration::from_millis(250));
-            status_shared.jobs_completed += 1;
+            status_shared.lock().unwrap().jobs_completed += 1;
         }
     });
-    while status.jobs_completed < 10 {
+    while status.lock().unwrap().jobs_completed < 10 {
         println!("waiting... ");
         thread::sleep(Duration::from_millis(500));
     }
