@@ -35,8 +35,59 @@ impl Default for Person {
 
 // I AM NOT DONE
 
+use std::convert::From;
+
 impl From<&str> for Person {
     fn from(s: &str) -> Person {
+        let mut split = s.splitn(2,',');
+        let name = split.next().unwrap();
+        if name.len() == 0 {
+            return Person::default();
+        }
+        if let Some(age_str) = split.next() {
+            if let Ok(age) = age_str.parse() {
+                return Person { name: name.to_string(), age }
+            }
+        }
+        Person::default()
+        
+
+        // if s.len() == 0 {
+        //     return Person::default();
+        // }
+        // let sep: Vec<&str> = s.split(',').collect();
+        // let name = sep[0].to_string();
+        // let age = sep[1].to_string().parse::<usize>().unwrap();
+        // let nameval: Result<&str, Person> = Ok(&name);
+        // let ageval: Result<&usize, Person> = Ok(&age);
+
+        // if nameval.is_ok() & ageval.is_ok() {
+        //     return Person {
+        //         name: name,
+        //         age: age,
+        //     }
+        // } else {
+        //     return Person::default();
+        // } 
+        // match name {
+        //     Ok() => {
+        //         match age {
+        //             Ok() => {
+        //                 return Person {
+        //                     name: name,
+        //                     age: age,
+        //                 }
+        //             },
+        //             Err() => {
+        //                 return Person::default()
+        //             }
+        //         }
+        //     },
+        //     Err() => {
+        //         return Person::default()
+        //     }
+        // }
+
     }
 }
 
