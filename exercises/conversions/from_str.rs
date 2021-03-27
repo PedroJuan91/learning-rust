@@ -25,6 +25,53 @@ struct Person {
 impl FromStr for Person {
     type Err = String;
     fn from_str(s: &str) -> Result<Person, Self::Err> {
+        // rdfa:src="https://github.com/ikeohachidi/rustling-solutions/blob/mine/exercises/conversions/from_str.rs"
+        let err: Self::Err = String::from("Cannot do this");
+        if s.len() == 0 { return Err(err) }
+        let split_str = s.split(",").collect::<Vec<&str>>();
+        
+        if split_str.len() != 2 {
+            return Err(err)
+        }
+        if split_str[0].is_empty() {
+            return Err(err)
+        }
+        if split_str[1].is_empty() {
+            return Err(err)
+        }
+        // let name = String::from_str(split_str[0]).unwrap_or(return Err(err));
+        // let age = usize::from_str(split_str[1]).unwrap_or(return Err(err));
+        let name = if String::from_str(split_str[0]).is_ok() {
+            String::from_str(split_str[0]).unwrap()
+        } else {
+            return Err(err)
+        };
+        let age = if usize::from_str(split_str[1]).is_ok() {
+            usize::from_str(split_str[1]).unwrap()
+        } else {
+            return Err(err)
+        };
+
+        Ok(Person { name, age })
+
+        // check for empty string
+        // if split_str.len() == 
+        // construct the person
+        // let mut person = Person {
+        //     name: split_str[0].to_string(),
+        //     age: 0,
+        // };
+        // check the person has a name
+        // if person.name.len() == 0 { return Err(err) }
+        // let age = split_str[1].parse::<usize>();
+
+        // match age {  
+        //     Ok(i) => {
+        //         person.age = i;
+        //     },
+        //     Err(i) => { return Err(err) }
+        // }
+        // Ok(person)
     }
 }
 
